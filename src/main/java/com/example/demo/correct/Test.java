@@ -7,6 +7,9 @@ import com.lpy.command.DefaultCommandRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author liangpengyu
+ */
 @Service("test")
 public class Test extends AbstractCommandServiceFactory<Test.Req> {
     private IndexService indexService;
