@@ -15,7 +15,7 @@
     <description>demo</description>
     <properties>
         <java.version>1.8</java.version>
-        <jlpay.commons.version>2.0.10-SNAPSHOT</jlpay.commons.version>
+        <docker.image.prefix>docker-demo</docker.image.prefix>
     </properties>
     <dependencies>
         <dependency>
@@ -48,29 +48,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--嘉联公共包-->
-<!--        <dependency>-->
-<!--            <groupId>com.jlpay.commons</groupId>-->
-<!--            <artifactId>commons-rpc</artifactId>-->
-<!--            <version>${jlpay.commons.version}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.jlpay.commons</groupId>-->
-<!--            <artifactId>commons-metrics</artifactId>-->
-<!--            <version>${jlpay.commons.version}</version>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash;嘉联公共包&ndash;&gt;-->
-
-<!--        &lt;!&ndash;工具支持&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.projectlombok</groupId>-->
-<!--            <artifactId>lombok</artifactId>-->
-<!--        </dependency>-->
-        <dependency>
-            <groupId>com.lpy</groupId>
-            <artifactId>lpyRpcDemo</artifactId>
-            <version>2.2</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -79,6 +56,29 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.6.4</version>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    <dockerDirectory></dockerDirectory>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
             </plugin>
         </plugins>
     </build>
